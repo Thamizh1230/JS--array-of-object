@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JS object & document</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel= "stylesheet" href="css/font-awesome.min.css">
+
+    <title>ADD DATA</title>
+
+    <style>
+        .container{
+
+            box-shadow: 0px 0px 15px -3px grey;
+        }
+
+      .icon-box {
+        display: flex;
+        align-items: center;
+        padding: 20px;
+        border: 0.5px solid #eef0ef;
+      }
+
+      .icon-box i {
+        font-size: 32px;
+        padding-right: 10px;
+        line-height: 1;
+      }
+
+      .icon-box h3 {
+        font-weight: 700;
+        margin: 0;
+        padding: 0;
+        line-height: 1;
+        font-size: 15px;
+      }
+
+      .icon-box h3 * {
+        color: dodgerblue;
+        transition: 0.3s;
+      }
+
+      .inputerror {
+        color: red;
+        display: none;
+      }
+
+      .invalid {
+        display: block !important;
+      }
+
+      #up_btn{
+
+        display:none;
+
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container mt-5">
+      <div class="border">
+        <div class="form-group px-3 pt-3">
+          <label>Title :</label>
+          <input class="inputs" type="text" placeholder="enter the title" id="title">
+          <p class="inputerror" id="titlerr">Enter title...!</p>
+        </div>
+
+        <br>
+
+        <div class="form-group px-3">
+          <label>Icon :</label>
+          <select class="inputs" id="icons">
+            <option value="null">---select font icons---</option>
+            <option value="fa-address-book">fa-address-book</option>
+            <option value="fa-id-card">fa-id-card</option>
+            <option value="fa-linode">fa-linode</option>
+            <option value="fa-user-circle-o">fa-user-circle-o</option>
+            <option value="fa-envelope-open-o">fa-envelope-open-o</option>
+            <option value="fa-university">fa-university</option>
+          </select>
+          <p class="inputerror" id="iconerr">Select Icons...!</p>
+        </div>
+        <br>
+
+        <div class="form-group px-3">
+          <label>Colors :</label>
+          <input type="color" id="color">
+        </div>
+
+        <br>
+
+        <button class="btn btn-primary" id="add_btn">ADD</button>
+        <button class="btn btn-primary" id="up_btn">UPDATE DATA</button>
+        <!-- <button class="btn btn-primary" id="del_btn">DELETE DATA</button> -->
+
+
+      </div>
+      <div class="row mt-3 shadow p-3 mb-5 bg-white rounded" id="item-box"></div>
+    </div>
+    <!-- <div class="container">
+      <div class="row">
+        <div class="col-3">
+          <div class="icon-box">
+            <i
+              class="fa fa-address-book"
+              style="color: brown"
+              aria-hidden="true"
+            ></i>
+            <h3><a href="">Lorem Ipsum</a></h3>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="icon-box">
+            <i class="fa fa-id-card" style="color: aqua" aria-hidden="true"></i>
+            <h3><a href="">Sed prespiciatis</a></h3>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="icon-box">
+            <i
+              class="fa fa-linode"
+              style="color: blueviolet"
+              aria-hidden="true"
+            ></i>
+            <h3><a href="">Magni Dolores</a></h3>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="icon-box">
+            <i
+              class="fa fa-user-circle-o"
+              style="color: e361ff"
+              aria-hidden="true"
+            ></i>
+            <h3><a href="">Lorem Dolores</a></h3>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+    <script>
+      var obj = [
+        {
+          id: 1,
+          title: "Lorem Ipsum",
+          icon: "fa-address-book",
+          iconcolor: "#ffbb2c"
+        },
+    
+        {
+          id: 2,
+          title: "Dolor Sitema",
+          icon: "fa-money",
+          iconcolor: "#5578ff",
+        },
+        {
+          id: 3,
+          title: "Sed perspiciatis",
+          icon: "fa-picture-o",
+          iconcolor:  "#e80368",
+        },
+        {
+          id: 4,
+          title: "Magni Dolores",
+          icon: "fa-calendar-o",
+          iconcolor: "#e361ff",
+        },
+      ];
+
+      let itemBox = document.getElementById("item-box");
+
+      function showdata(data) {
+        itemBox.innerHTML = "";
+
+        data.forEach(function (elm, i, arr) {
+            //create elements------------------------------
+
+          let colm = document.createElement("div");
+          let iconBox = document.createElement("div");
+          let icons = document.createElement("i");
+          let txlm = document.createElement("h3");
+          let linlm = document.createElement("a");
+
+          let editbtn = document.createElement("button")
+          let delbtn = document.createElement("button")
+
+          //set attribute--------------------------------
+          colm.setAttribute("class", "col-3");
+          iconBox.setAttribute("class", "icon-box");
+          icons.setAttribute("class", "fa " + elm.icon);
+
+          editbtn.setAttribute("class", "edit_btn")
+          editbtn.onclick = edit.bind(null, elm.id)
+          delbtn.setAttribute("class", "del_btn")
+          delbtn.onclick = deleteitem.bind(null, elm.id)
+          
+
+          //set color------------------------------
+          icons.style.color = elm.iconcolor;
+
+          //create innertext------------------------
+          
+          editbtn.innerText = "edit";
+          delbtn.innerText = "delete";
+
+          linlm.innerText = elm.title;
+          txlm.appendChild(linlm);
+
+          iconBox.append(icons, txlm, editbtn, delbtn);
+          colm.appendChild(iconBox);
+          itemBox.appendChild(colm);
+        });
+      }
+
+
+      showdata(obj);
+      let tname = document.getElementById("title");
+      let favicons = document.getElementById("icons");
+      let coloriteam = document.getElementById("color");
+      let addbtn = document.getElementById("add_btn");
+      let updatebtn = document.getElementById("up_btn")
+      let deletebtn = document.getElementById("del_btn")
+      let getid = null;
+
+
+      function additems() {
+        let isvalid = false;
+        if (tname.value != "" && favicons.value != "null") {
+          isvalid = true;
+        } else {
+          isvalid = false;
+        }
+        if (favicons.value != "null") {
+          error("iconerr", false);
+        } else {
+          error("iconerr", true);
+        }
+        if (tname.value != "") {
+          error("titlerr", false);
+        } else {
+          error("titlerr", true);
+        }
+        if (isvalid) {
+          let objicons = {
+            id: Math.random(),
+            title: tname.value,
+            icon: favicons.value,
+            iconcolor: coloriteam.value,
+          };
+
+          obj.push(objicons);
+          showdata(obj);
+          console.log(obj);
+         
+        }
+
+        tname.value="";
+        favicons.value="null";
+        coloriteam.value="#000";
+
+      }
+    //edit function-----------------------
+      function edit(id){
+       
+        let finddata = obj.find(function(items){
+            return items.id == id
+        })
+
+        console.log(finddata);
+        tname.value = finddata.title;
+        // console.log(favicons)
+        favicons.value = finddata.icon;
+        coloriteam.value = finddata.iconcolor;
+        addbtn.style.display="none";
+        updatebtn.style.display="inline-block"
+        getid = finddata.id;
+
+      }
+
+      addbtn.addEventListener("click", additems);
+
+
+      //delete function--------------
+
+      function deleteitem(id){
+          let finddata = obj.find(function(items){
+
+            return items.id == id;
+      })
+        if(finddata){
+
+          let updateData = obj.filter(function(items){
+
+             return items.id !== id;
+          })
+          obj = updateData;
+          showdata(obj);
+        }
+      }
+
+      
+  
+     
+      
+      //UPDATE function------------
+
+      function updatebutton(){
+        let finddata = obj.find(function(items){
+            return items.id == getid
+        })
+        //   console.log(finddata);
+
+        if (finddata){
+
+            let updatedata = obj.map(function(items){
+                if (items.id == getid){
+                  // console.log(items);
+                    items.title = tname.value;
+                    items.icon = favicons.value;
+                    items.iconcolor = coloriteam.value;
+                    return items;
+                }
+
+                else{
+                    return items;
+                }
+            })
+
+                obj=updatedata;
+                // console.log(updateobject);
+
+                showdata(obj);
+                getid =  null;
+                addbtn.style.display="inline-block";
+                updatebtn.style.display="none";
+                tname.value ="";
+                favicons.value ="null";
+                coloriteam.value ="#000000";
+        }
+      }
+
+      updatebtn.addEventListener("click", updatebutton);
+
+
+      function error(elm, isvalid) {
+        let inputs = document.getElementById(elm);
+        if (isvalid) {
+          inputs.classList.add("invalid");
+        } else {
+          inputs.classList.remove("invalid");
+        }
+      }
+    </script>
+  </body>
+</html>

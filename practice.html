@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Array-of-object</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel= "stylesheet" href="css/font-awesome.min.css">
+</head>
+<body>
+    <div class="container" style="margin-top: 40px;">
+        <div class="border col-3 p-3 mb-5 ">
+            <div class="form-group">
+                <label>Title :</label>
+                <input type="text" placeholder="enter the title" id="title">
+            </div><br>
+            <div class="form-group">
+                <label>Icon :</label>
+                <select  id="icons">
+                    <option value="null">---select font icons---</option>
+
+
+<script>
+     // get object value by input
+     let titleName=document.getElementById("title");
+    let iconsType=document.getElementById("icons");
+    let colorStyle=document.getElementById("color");
+    let addbtn = document.getElementById("ad-btn");
+
+    function createObject(){
+        let objValue={title:titleName.value,icon:iconsType.value,iconcolor:colorStyle.value};
+        obj.push(objValue);
+        console.log(obj);
+
+    }
+    addbtn.addEventListener("click",createObject);
+</script>
+   
+ 
+
+
+    
+</body>
+</html>
